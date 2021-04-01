@@ -12,7 +12,7 @@ export default class Install extends Command {
   static args = [{name: 'file'}]
 
   async run() {
-    const services = ['apache2', 'shivammathur/php/php@7.4', 'dnsmasq', 'openssl']
+    const services = ['httpd', 'shivammathur/php/php@7.4', 'dnsmasq', 'openssl']
 
     cli.log('first we\'re gonna check if all required formulaes are installed')
 

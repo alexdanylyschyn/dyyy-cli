@@ -13,6 +13,22 @@ export function installer(formula: string) {
     tap('shivammathur/php')
   }
 
+  if (formula.includes('httpd')) {
+    cli.log('stopping native apache')
+    const stop_service = spawnSync('sudo', ['apachectl', 'stop'])
+
+    if (stop_service.stderr.toString() !== '') {
+      cli.warn(stop_service.stderr.toString())
+    }
+
+    cli.log('unloading native apache')
+    const unload_service = spawnSync('sudo', ['unload', '-w', '/System/Library/LaunchDaemons/org.apache.httpd.plist', '2>/dev/null'])
+
+    if (unload_service.stderr.toString() !== '') {
+      cli.warn(unload_service.stderr.toString())
+    }
+  }
+
   const brew = install(formula)
 
   if (brew.stderr.toString() !== '') {
